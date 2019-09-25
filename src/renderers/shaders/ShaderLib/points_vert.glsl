@@ -9,16 +9,26 @@ uniform float scale;
 #include <clipping_planes_pars_vertex>
 
 void main() {
-
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+	
 	#include <color_vertex>
 	#include <begin_vertex>
 	#include <morphtarget_vertex>
 	#include <project_vertex>
 
+	gl_PointSize = size;
+
 	#ifdef USE_SIZEATTENUATION
-		gl_PointSize = size * ( scale / - mvPosition.z );
-	#else
-		gl_PointSize = size;
+
+		bool isPerspective = ( projectionMatrix[ 2 ][ 3 ] == - 1.0 );
+
+		if ( isPerspective ) gl_PointSize *= ( scale / - mvPosition.z );
+
 	#endif
 
 	#include <logdepthbuf_vertex>

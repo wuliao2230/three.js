@@ -1,5 +1,5 @@
 #define NORMAL
-
+// TODO shader 没有OBJECTSPACE_NORMALMAP
 #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || ( defined( USE_NORMALMAP ) && ! defined( OBJECTSPACE_NORMALMAP ) )
 
 	varying vec3 vViewPosition;
@@ -12,6 +12,7 @@
 
 #endif
 
+#include <common>
 #include <uv_pars_vertex>
 #include <displacementmap_pars_vertex>
 #include <morphtarget_pars_vertex>
@@ -19,6 +20,12 @@
 #include <logdepthbuf_pars_vertex>
 
 void main() {
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
 
 	#include <uv_vertex>
 

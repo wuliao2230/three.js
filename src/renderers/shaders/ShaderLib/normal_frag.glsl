@@ -2,6 +2,7 @@
 
 uniform float opacity;
 
+// TODO shader 没有OBJECTSPACE_NORMALMAP
 #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || ( defined( USE_NORMALMAP ) && ! defined( OBJECTSPACE_NORMALMAP ) )
 
 	varying vec3 vViewPosition;
@@ -29,3 +30,5 @@ void main() {
 	gl_FragColor = vec4( packNormalToRGB( normal ), opacity );
 
 }
+
+// TODO shader

@@ -19,6 +19,8 @@ varying vec3 vViewPosition;
 
 #endif
 
+// TODO shader define STANDARD...
+
 #include <common>
 #include <packing>
 #include <dithering_pars_fragment>
@@ -45,7 +47,17 @@ varying vec3 vViewPosition;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 
+#ifdef EGRET  
+	#include <custom_fragment> // modified by egret
+#endif
+
 void main() {
+
+ 
+	#ifdef EGRET  
+		// modified by egret
+		#include <custom_begin_fragment>
+	#endif
 
 	#include <clipping_planes_fragment>
 
@@ -82,5 +94,12 @@ void main() {
 	#include <fog_fragment>
 	#include <premultiplied_alpha_fragment>
 	#include <dithering_fragment>
+
+ 	
+	#ifdef EGRET  
+		// modified by egret
+		#include <custom_end_fragment>
+	#endif
+
 
 }

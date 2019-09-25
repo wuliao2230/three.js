@@ -1,19 +1,18 @@
 #define LAMBERT
+varying vec3 vLightFront;// TODO shader vIndirectFront
 
-varying vec3 vLightFront;
-
-#ifdef DOUBLE_SIDED
+#ifdef DOUBLE_SIDED// TODO shader vIndirectBack
 
 	varying vec3 vLightBack;
 
 #endif
-
 #include <common>
 #include <uv_pars_vertex>
 #include <uv2_pars_vertex>
 #include <envmap_pars_vertex>
 #include <bsdfs>
 #include <lights_pars_begin>
+#include <lights_pars_maps>
 #include <color_pars_vertex>
 #include <fog_pars_vertex>
 #include <morphtarget_pars_vertex>
@@ -21,8 +20,17 @@ varying vec3 vLightFront;
 #include <shadowmap_pars_vertex>
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
+#include <custom_vertex> // modified by egret
 
 void main() {
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+	
+	#include <custom_begin_vertex>
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -46,5 +54,11 @@ void main() {
 	#include <lights_lambert_vertex>
 	#include <shadowmap_vertex>
 	#include <fog_vertex>
+
+
+	#ifdef EGRET  
+		// modified by egret
+		#include <custom_end_vertex>
+	#endif
 
 }

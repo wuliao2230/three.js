@@ -7,6 +7,7 @@ varying vec3 vViewPosition;
 	varying vec3 vNormal;
 
 #endif
+// TODO shader #define STANDARD
 
 #include <common>
 #include <uv_pars_vertex>
@@ -20,7 +21,22 @@ varying vec3 vViewPosition;
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 
+
+#ifdef EGRET  	
+	#include <custom_vertex> // modified by egret
+#endif
+
+
 void main() {
+
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+
+	#include <custom_begin_vertex>
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -51,5 +67,13 @@ void main() {
 	#include <worldpos_vertex>
 	#include <shadowmap_vertex>
 	#include <fog_vertex>
+
+
+	
+	#ifdef EGRET  
+	 	// modified by egret
+		#include <custom_end_vertex>
+	#endif
+
 
 }
