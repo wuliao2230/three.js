@@ -11,6 +11,14 @@ varying vec3 vWorldPosition;
 #include <clipping_planes_pars_vertex>
 
 void main() {
+	// modified by egret
+	#ifdef EGRET  
+
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+
+	#endif
 
 	#include <uv_vertex>
 
@@ -32,6 +40,13 @@ void main() {
 	#include <worldpos_vertex>
 	#include <clipping_planes_vertex>
 
+
+	#ifdef EGRET  
+		// modified by egret
+		gl_Position.x *= -1.0;
+	#endif
+
+	
 	vWorldPosition = worldPosition.xyz;
 
 }

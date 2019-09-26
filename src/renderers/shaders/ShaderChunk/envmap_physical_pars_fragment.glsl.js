@@ -59,17 +59,28 @@ export default /* glsl */`
 
 	vec3 getLightProbeIndirectRadiance( /*const in SpecularLightProbe specularLightProbe,*/ const in vec3 viewDir, const in vec3 normal, const in float roughness, const in int maxMIPLevel ) {
 
-		#ifdef ENVMAP_MODE_REFLECTION
+		#ifdef EGRET  
+			#ifndef ENVMAP_MODE_REFRACTION // modified by egret
+				vec3 reflectVec = reflect( -viewDir, normal );
 
-		  vec3 reflectVec = reflect( -viewDir, normal );
-
-		  // Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
-		  reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
-
+				// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
+		  		reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
+			#else
+				vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
+			#endif
 		#else
+			#ifdef ENVMAP_MODE_REFLECTION
 
-		  vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
+		  		vec3 reflectVec = reflect( -viewDir, normal );
 
+		 	 	// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
+		 	 	reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
+
+			#else
+
+		  		vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
+
+			#endif
 		#endif
 
 		reflectVec = inverseTransformDirection( reflectVec, viewMatrix );
@@ -117,7 +128,13 @@ export default /* glsl */`
 
 		#elif defined( ENVMAP_TYPE_SPHERE )
 
-			vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
+			#ifdef EGRET  
+				// modified by egret
+				vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0, 0.0, -1.0 ) );
+				reflectView = vec3(reflectView.x * 0.5 + 0.5, 1.0 - (reflectView.y * 0.5 + 0.5), 0.0);
+			#else
+				vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0,0.0,1.0 ) );
+			#endif
 
 			#ifdef TEXTURE_LOD_EXT
 

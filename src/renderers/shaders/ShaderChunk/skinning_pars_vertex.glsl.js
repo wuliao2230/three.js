@@ -11,23 +11,39 @@ export default /* glsl */`
 
 		mat4 getBoneMatrix( const in float i ) {
 
-			float j = i * 4.0;
-			float x = mod( j, float( boneTextureSize ) );
-			float y = floor( j / float( boneTextureSize ) );
+			#ifdef EGRET  
+			// modified by egret
+				float j = i * 4.0;
+				float dx = 1.0 / float( boneTextureSize );
 
-			float dx = 1.0 / float( boneTextureSize );
-			float dy = 1.0 / float( boneTextureSize );
+				vec4 v1 = texture2D( boneTexture, vec2( dx * ( j + 0.5 ), 0.0 ) );
+				vec4 v2 = texture2D( boneTexture, vec2( dx * ( j + 1.5 ), 0.0 ) );
+				vec4 v3 = texture2D( boneTexture, vec2( dx * ( j + 2.5 ), 0.0 ) );
+				vec4 v4 = texture2D( boneTexture, vec2( dx * ( j + 3.5 ), 0.0 ) );
 
-			y = dy * ( y + 0.5 );
-
-			vec4 v1 = texture2D( boneTexture, vec2( dx * ( x + 0.5 ), y ) );
-			vec4 v2 = texture2D( boneTexture, vec2( dx * ( x + 1.5 ), y ) );
-			vec4 v3 = texture2D( boneTexture, vec2( dx * ( x + 2.5 ), y ) );
-			vec4 v4 = texture2D( boneTexture, vec2( dx * ( x + 3.5 ), y ) );
-
-			mat4 bone = mat4( v1, v2, v3, v4 );
+				mat4 bone = mat4( v1, v2, v3, v4 );
 
 			return bone;
+
+			#else
+				float j = i * 4.0;
+				float x = mod( j, float( boneTextureSize ) );
+				float y = floor( j / float( boneTextureSize ) );
+
+				float dx = 1.0 / float( boneTextureSize );
+				float dy = 1.0 / float( boneTextureSize );
+
+				y = dy * ( y + 0.5 );
+
+				vec4 v1 = texture2D( boneTexture, vec2( dx * ( x + 0.5 ), y ) );
+				vec4 v2 = texture2D( boneTexture, vec2( dx * ( x + 1.5 ), y ) );
+				vec4 v3 = texture2D( boneTexture, vec2( dx * ( x + 2.5 ), y ) );
+				vec4 v4 = texture2D( boneTexture, vec2( dx * ( x + 3.5 ), y ) );
+
+				mat4 bone = mat4( v1, v2, v3, v4 );
+
+			return bone;
+			#endif
 
 		}
 

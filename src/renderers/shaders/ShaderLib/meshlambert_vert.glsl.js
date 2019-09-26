@@ -22,8 +22,17 @@ varying vec3 vIndirectFront;
 #include <shadowmap_pars_vertex>
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
+#include <custom_vertex> // modified by egret
 
 void main() {
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+	
+	#include <custom_begin_vertex>
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -47,5 +56,12 @@ void main() {
 	#include <lights_lambert_vertex>
 	#include <shadowmap_vertex>
 	#include <fog_vertex>
+
+
+	#ifdef EGRET  
+		// modified by egret
+		#include <custom_end_vertex>
+	#endif
+
 }
 `;

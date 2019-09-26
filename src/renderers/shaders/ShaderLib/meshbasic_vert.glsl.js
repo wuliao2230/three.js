@@ -10,7 +10,20 @@ export default /* glsl */`
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 
+#ifdef EGRET  	
+	// modified by egret
+	#include <custom_vertex>
+#endif
+
+
 void main() {
+ 	// modified by egret
+	#ifdef EGRET  
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+	#include <custom_begin_vertex>
 
 	#include <uv_vertex>
 	#include <uv2_vertex>
@@ -36,6 +49,15 @@ void main() {
 	#include <clipping_planes_vertex>
 	#include <envmap_vertex>
 	#include <fog_vertex>
+
+ 
+
+	#ifdef EGRET  
+		// modified by egret
+		#include <custom_end_vertex>
+	#endif
+
+	
 
 }
 `;

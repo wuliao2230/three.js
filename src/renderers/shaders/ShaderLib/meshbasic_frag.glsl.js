@@ -22,8 +22,14 @@ uniform float opacity;
 #include <specularmap_pars_fragment>
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
+#include <custom_fragment> // modified by egret
 
 void main() {
+
+ 	// modified by egret
+	#ifdef EGRET  
+		#include <custom_begin_fragment>
+	#endif
 
 	#include <clipping_planes_fragment>
 
@@ -40,9 +46,15 @@ void main() {
 
 	// accumulation (baked indirect lighting only)
 	#ifdef USE_LIGHTMAP
-
-		reflectedLight.indirectDiffuse += texture2D( lightMap, vUv2 ).xyz * lightMapIntensity;
-
+	
+		#ifdef EGRET  
+		// modified by egret
+			vec4 lightmapTex = texture2D(lightMap, vUv2);
+			float power = 5.0 * lightmapTex.a;
+			reflectedLight.indirectDiffuse += lightmapTex.rgb * power * lightMapIntensity;
+		#else
+			reflectedLight.indirectDiffuse += texture2D( lightMap, vUv2 ).xyz * lightMapIntensity;
+		#endif
 	#else
 
 		reflectedLight.indirectDiffuse += vec3( 1.0 );
@@ -64,6 +76,11 @@ void main() {
 	#include <tonemapping_fragment>
 	#include <encodings_fragment>
 	#include <fog_fragment>
+
+ 	// modified by egret
+	#ifdef EGRET  
+		#include <custom_end_fragment>
+	#endif
 
 }
 `;

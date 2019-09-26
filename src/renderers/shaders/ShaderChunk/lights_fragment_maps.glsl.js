@@ -3,8 +3,14 @@ export default /* glsl */`
 
 	#ifdef USE_LIGHTMAP
 
-		vec3 lightMapIrradiance = texture2D( lightMap, vUv2 ).xyz * lightMapIntensity;
-
+		#ifdef EGRET
+			vec4 lightmapTex = texture2D(lightMap, vUv2);
+			// float power = pow( 2.0, lightmapTex.a * 255.0 - 128.0);
+			float power = 5.0 * lightmapTex.a;
+			vec3 lightMapIrradiance = lightmapTex.rgb * power * lightMapIntensity;
+		#else
+			vec3 lightMapIrradiance = texture2D( lightMap, vUv2 ).xyz * lightMapIntensity;
+		#endif
 		#ifndef PHYSICALLY_CORRECT_LIGHTS
 
 			lightMapIrradiance *= PI; // factor of PI should not be present; included here to prevent breakage

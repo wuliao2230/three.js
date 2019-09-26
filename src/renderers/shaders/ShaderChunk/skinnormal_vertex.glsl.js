@@ -6,9 +6,12 @@ export default /* glsl */`
 	skinMatrix += skinWeight.y * boneMatY;
 	skinMatrix += skinWeight.z * boneMatZ;
 	skinMatrix += skinWeight.w * boneMatW;
-	skinMatrix  = bindMatrixInverse * skinMatrix * bindMatrix;
+	
+	#ifdef EGRET  
 
-	objectNormal = vec4( skinMatrix * vec4( objectNormal, 0.0 ) ).xyz;
+	#else
+		skinMatrix = bindMatrixInverse * skinMatrix * bindMatrix;
+	#endif
 
 	#ifdef USE_TANGENT
 

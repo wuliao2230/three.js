@@ -53,6 +53,15 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 }
 
+// modified by egret
+#ifdef EGRET
+#define DIR_LIGHT_SIZE 43
+#define POINT_LIGHT_SIZE 47
+#define SPOT_LIGHT_SIZE 50
+#define RECT_AREA_LIGHT_SIZE 44
+#define HEMI_LIGHT_SIZE 41
+#endif
+
 #if NUM_DIR_LIGHTS > 0
 
 	struct DirectionalLight {
@@ -63,9 +72,16 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		float shadowBias;
 		float shadowRadius;
 		vec2 shadowMapSize;
+		#ifdef EGRET
+		int cullingMask;
+		#endif
 	};
 
-	uniform DirectionalLight directionalLights[ NUM_DIR_LIGHTS ];
+	#ifdef EGRET  
+		uniform float directionalLights[ NUM_DIR_LIGHTS * DIR_LIGHT_SIZE ];
+	#else
+		uniform DirectionalLight directionalLights[ NUM_DIR_LIGHTS ];
+	#endif
 
 	void getDirectionalDirectLightIrradiance( const in DirectionalLight directionalLight, const in GeometricContext geometry, out IncidentLight directLight ) {
 
@@ -92,9 +108,16 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		vec2 shadowMapSize;
 		float shadowCameraNear;
 		float shadowCameraFar;
+		#ifdef EGRET
+		int cullingMask;
+		#endif
 	};
 
-	uniform PointLight pointLights[ NUM_POINT_LIGHTS ];
+	#ifdef EGRET  
+		uniform float pointLights[ NUM_POINT_LIGHTS * POINT_LIGHT_SIZE ];
+	#else
+		uniform PointLight pointLights[ NUM_POINT_LIGHTS ];
+	#endif
 
 	// directLight is an out parameter as having it as a return value caused compiler errors on some devices
 	void getPointDirectLightIrradiance( const in PointLight pointLight, const in GeometricContext geometry, out IncidentLight directLight ) {
@@ -128,9 +151,16 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		float shadowBias;
 		float shadowRadius;
 		vec2 shadowMapSize;
+		#ifdef EGRET
+		int cullingMask;
+		#endif
 	};
 
-	uniform SpotLight spotLights[ NUM_SPOT_LIGHTS ];
+	#ifdef EGRET  
+		uniform float spotLights[ NUM_SPOT_LIGHTS * SPOT_LIGHT_SIZE ]; // modified by egret
+	#else
+		uniform SpotLight spotLights[ NUM_SPOT_LIGHTS ];
+	#endif
 
 	// directLight is an out parameter as having it as a return value caused compiler errors on some devices
 	void getSpotDirectLightIrradiance( const in SpotLight spotLight, const in GeometricContext geometry, out IncidentLight directLight  ) {
@@ -167,6 +197,9 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		vec3 position;
 		vec3 halfWidth;
 		vec3 halfHeight;
+		#ifdef EGRET
+		int cullingMask;
+		#endif
 	};
 
 	// Pre-computed values of LinearTransformedCosine approximation of BRDF
@@ -174,7 +207,11 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 	uniform sampler2D ltc_1; // RGBA Float
 	uniform sampler2D ltc_2; // RGBA Float
 
-	uniform RectAreaLight rectAreaLights[ NUM_RECT_AREA_LIGHTS ];
+	#ifdef EGRET  
+		uniform float rectAreaLights[ NUM_RECT_AREA_LIGHTS * RECT_AREA_LIGHT_SIZE ]; // modified by egret
+	#else
+		uniform RectAreaLight rectAreaLights[ NUM_RECT_AREA_LIGHTS ];
+	#endif
 
 #endif
 
@@ -185,9 +222,18 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		vec3 direction;
 		vec3 skyColor;
 		vec3 groundColor;
+		#ifdef EGRET
+		int cullingMask;
+		#endif
 	};
 
-	uniform HemisphereLight hemisphereLights[ NUM_HEMI_LIGHTS ];
+
+	#ifdef EGRET  
+		uniform float hemisphereLights[NUM_HEMI_LIGHTS * HEMI_LIGHT_SIZE ]; // modified by egret
+	#else
+		uniform HemisphereLight hemisphereLights[ NUM_HEMI_LIGHTS ];
+	#endif
+
 
 	vec3 getHemisphereLightIrradiance( const in HemisphereLight hemiLight, const in GeometricContext geometry ) {
 

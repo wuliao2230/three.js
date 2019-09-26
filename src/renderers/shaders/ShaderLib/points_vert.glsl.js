@@ -10,7 +10,13 @@ uniform float scale;
 #include <clipping_planes_pars_vertex>
 
 void main() {
-
+	#ifdef EGRET  
+		// modified by egret
+		#ifdef USE_INSTANCED
+			#include <instances_vertex>
+		#endif
+	#endif
+	
 	#include <color_vertex>
 	#include <begin_vertex>
 	#include <morphtarget_vertex>
