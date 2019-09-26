@@ -1,3 +1,4 @@
+export default /* glsl */`
 #include <common>
 #include <color_pars_vertex>
 #include <fog_pars_vertex>
@@ -95,3 +96,4 @@ void main() {
 	#include <clipping_planes_vertex>
 	#include <fog_vertex>
 }
+`;

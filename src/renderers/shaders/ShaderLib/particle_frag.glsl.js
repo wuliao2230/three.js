@@ -1,3 +1,4 @@
+export default /* glsl */`
 //inspired by layaair:https://github.com/layabox/layaair/blob/master/src/d3/src/laya/d3/shader/files/ParticleShuriKen.ps
 #include <common>
 #include <fog_pars_fragment>
@@ -25,3 +26,4 @@ void main()
 	gl_FragColor*=texture2D(map,v_texcoord)*vec4(diffuse, opacity)*v_color*2.0;
 	#include <fog_fragment>
 }
+`;

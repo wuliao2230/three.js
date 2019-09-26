@@ -1,3 +1,4 @@
+export default /* glsl */`
 //inspired by layaair:https://github.com/layabox/layaair/blob/master/src/d3/src/laya/d3/shader/files/ParticleShuriKen.vs
 #include <common>
 #if defined(SPHERHBILLBOARD)||defined(STRETCHEDBILLBOARD)||defined(HORIZONTALBILLBOARD)||defined(VERTICALBILLBOARD)
@@ -38,4 +39,4 @@ void main()
 	v_discard=0.0;
 	#include <fog_vertex>
 }
-
+`;
