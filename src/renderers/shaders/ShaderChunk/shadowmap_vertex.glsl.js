@@ -9,6 +9,7 @@ export default /* glsl */`
 		vDirectionalShadowCoord[ i ] = directionalShadowMatrix[ i ] * worldPosition;
 
 	}
+    // #end unroll_loop
 
 	#endif
 
@@ -20,6 +21,7 @@ export default /* glsl */`
 		vSpotShadowCoord[ i ] = spotShadowMatrix[ i ] * worldPosition;
 
 	}
+    // #end unroll_loop
 
 	#endif
 
@@ -31,6 +33,7 @@ export default /* glsl */`
 		vPointShadowCoord[ i ] = pointShadowMatrix[ i ] * worldPosition;
 
 	}
+    // #end unroll_loop
 
 	#endif
 

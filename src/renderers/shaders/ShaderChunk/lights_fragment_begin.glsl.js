@@ -61,7 +61,7 @@ IncidentLight directLight;
 				directLight.color *= all( bvec2( pointLight.shadow, directLight.visible ) ) ? getPointShadow( pointShadowMap[ i ], pointLight.shadowMapSize, pointLight.shadowBias, pointLight.shadowRadius, vPointShadowCoord[ i ], pointLight.shadowCameraNear, pointLight.shadowCameraFar ) : 1.0;
 				#endif
 
-				RE_Direct( directLight, geometry, material, reflectedLight );;
+				RE_Direct( directLight, geometry, material, reflectedLight );
 			}	
 
 		#else
@@ -77,6 +77,7 @@ IncidentLight directLight;
 		#endif
 
 	}
+    // #end unroll_loop
 
 #endif
 
@@ -129,7 +130,8 @@ IncidentLight directLight;
 
 			RE_Direct( directLight, geometry, material, reflectedLight );
 		#endif
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -177,7 +179,8 @@ IncidentLight directLight;
 
 			RE_Direct( directLight, geometry, material, reflectedLight );
 		#endif
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -205,7 +208,8 @@ IncidentLight directLight;
 			rectAreaLight = rectAreaLights[ i ];
 			RE_Direct_RectArea( rectAreaLight, geometry, material, reflectedLight );
 		#endif
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -213,7 +217,12 @@ IncidentLight directLight;
 
 	vec3 iblIrradiance = vec3( 0.0 );
 	vec3 irradiance = getAmbientLightIrradiance( ambientLightColor );
-	irradiance += getLightProbeIrradiance( lightProbe, geometry );
+	#ifdef EGRET 
+
+	#else
+		irradiance += getLightProbeIrradiance( lightProbe, geometry );
+	#endif
+	
 	#if (NUM_HEMI_LIGHTS > 0 )
 		HemisphereLight hemisphereLight;
 
@@ -237,7 +246,8 @@ IncidentLight directLight;
 			#else
 				irradiance += getHemisphereLightIrradiance( hemisphereLights[ i ], geometry );
 			#endif
-		}		
+		}
+		// #end unroll_loop
 
 	#endif
 

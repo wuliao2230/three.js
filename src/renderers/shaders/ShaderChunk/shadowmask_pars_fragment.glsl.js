@@ -31,12 +31,11 @@ float getShadowMask() {
 
 		#endif
 	}
+    // #end unroll_loop
 
 	#endif
 
 	#if NUM_SPOT_LIGHT_SHADOWS > 0
-
-	#if NUM_SPOT_LIGHTS > 0
 
 	SpotLight spotLight;
 
@@ -62,6 +61,7 @@ float getShadowMask() {
 		#endif
 			
 	}
+    // #end unroll_loop
 
 	#endif
 
@@ -94,6 +94,7 @@ float getShadowMask() {
 		#endif
 		
 	}
+    // #end unroll_loop
 
 	#endif
 

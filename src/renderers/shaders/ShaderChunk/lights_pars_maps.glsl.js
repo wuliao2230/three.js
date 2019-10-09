@@ -58,12 +58,26 @@ export default /* glsl */`
 
 		#ifdef EGRET  
 			#ifndef ENVMAP_MODE_REFRACTION // modified by egret
-				vec3 reflectVec = reflect( -geometry.viewDir, geometry.normal );
+				vec3 reflectVec = reflect( -viewDir, normal );
+
+				// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
+				reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
 			#else
-				vec3 reflectVec = refract( -geometry.viewDir, geometry.normal, refractionRatio );
+				vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
 			#endif
 		#else
-			vec3 reflectVec = refract( -geometry.viewDir, geometry.normal, refractionRatio );
+			#ifdef ENVMAP_MODE_REFLECTION
+
+				vec3 reflectVec = reflect( -viewDir, normal );
+
+				// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
+				reflectVec = normalize( mix( reflectVec, normal, roughness * roughness) );
+
+	 		#else
+
+				vec3 reflectVec = refract( -viewDir, normal, refractionRatio );
+
+	 		#endif
 		#endif
 
 		reflectVec = inverseTransformDirection( reflectVec, viewMatrix );
@@ -142,5 +156,3 @@ export default /* glsl */`
 
 #endif
 `;
-
-// TODO shader 重命名成envmap_physical_pars_fragment.glsl

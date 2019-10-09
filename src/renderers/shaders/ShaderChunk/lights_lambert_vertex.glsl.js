@@ -30,6 +30,7 @@ vec3 directLightColor_Diffuse;
 
  		// modified by egret
 		#ifdef EGRET
+			
 			#ifdef LIGHT_CULLING
 				pointLight.cullingMask = int(pointLights[ i * POINT_LIGHT_SIZE + LIGHT_CULLING + 15]);
 			#else
@@ -41,16 +42,16 @@ vec3 directLightColor_Diffuse;
 				pointLight.distance = pointLights[ i  * POINT_LIGHT_SIZE + 6];
 				pointLight.decay = pointLights[ i  * POINT_LIGHT_SIZE + 7];
 				getPointDirectLightIrradiance( pointLight, geometry, directLight );
-
-				dotNL = dot( geometry.normal, directLight.direction );
+			
+				float dotNL = dot( geometry.normal, directLight.direction );
 				directLightColor_Diffuse = PI * directLight.color;
-
+			
 				vLightFront += saturate( dotNL ) * directLightColor_Diffuse;
-
+			
 				#ifdef DOUBLE_SIDED
-
+			
 					vLightBack += saturate( -dotNL ) * directLightColor_Diffuse;
-
+			
 				#endif
 			}
 		#else
@@ -68,7 +69,8 @@ vec3 directLightColor_Diffuse;
 			#endif
 
 		#endif		
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -79,7 +81,7 @@ vec3 directLightColor_Diffuse;
 	for ( int i = 0; i < NUM_SPOT_LIGHTS; i ++ ) {
 
  		// modified by egret
-		#ifdef EGRET
+		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				spotLight.cullingMask = int(spotLights[ i  * SPOT_LIGHT_SIZE + LIGHT_CULLING + 18]);
 			#else
@@ -93,18 +95,18 @@ vec3 directLightColor_Diffuse;
 				spotLight.decay = spotLights[ i  * SPOT_LIGHT_SIZE + 10];
 				spotLight.coneCos = spotLights[ i  * SPOT_LIGHT_SIZE + 11];
 				spotLight.penumbraCos = spotLights[ i  * SPOT_LIGHT_SIZE + 12];
-
+			
 				getSpotDirectLightIrradiance( spotLight, geometry, directLight );
-
-				dotNL = dot( geometry.normal, directLight.direction );
+			
+				float dotNL = dot( geometry.normal, directLight.direction );
 				directLightColor_Diffuse = PI * directLight.color;
-
+			
 				vLightFront += saturate( dotNL ) * directLightColor_Diffuse;
-
+			
 				#ifdef DOUBLE_SIDED
-
+			
 					vLightBack += saturate( -dotNL ) * directLightColor_Diffuse;
-
+			
 				#endif
 			}
 		#else
@@ -119,7 +121,8 @@ vec3 directLightColor_Diffuse;
 
 			#endif
 		#endif		
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -141,7 +144,7 @@ vec3 directLightColor_Diffuse;
 	for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
 
  		// modified by egret
-		#ifdef EGRET
+		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				directionalLight.cullingMask = int(directionalLights[ i  * DIR_LIGHT_SIZE + LIGHT_CULLING + 11]);
 			#else
@@ -151,18 +154,18 @@ vec3 directLightColor_Diffuse;
 				directionalLight.direction = vec3(directionalLights[ i  * DIR_LIGHT_SIZE + 0], directionalLights[ i  * DIR_LIGHT_SIZE + 1], directionalLights[ i  * DIR_LIGHT_SIZE + 2]);
 				directionalLight.color = vec3(directionalLights[ i  * DIR_LIGHT_SIZE + 3], directionalLights[ i  * DIR_LIGHT_SIZE + 4], directionalLights[ i  * DIR_LIGHT_SIZE + 5]);
 				getDirectionalDirectLightIrradiance( directionalLight, geometry, directLight );
-
-				dotNL = dot( geometry.normal, directLight.direction );
+			
+				float dotNL = dot( geometry.normal, directLight.direction );
 				directLightColor_Diffuse = PI * directLight.color;
-
+			
 				vLightFront += saturate( dotNL ) * directLightColor_Diffuse;
-
+			
 				#ifdef DOUBLE_SIDED
-
+			
 					vLightBack += saturate( -dotNL ) * directLightColor_Diffuse;
-
+			
 				#endif
-		}	
+			}		
 		#else
 			getDirectionalDirectLightIrradiance( directionalLights[ i ], geometry, directLight );
 
@@ -177,7 +180,8 @@ vec3 directLightColor_Diffuse;
 
 			#endif
 		#endif
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 
@@ -188,7 +192,7 @@ vec3 directLightColor_Diffuse;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_HEMI_LIGHTS; i ++ ) {
 		// modified by egret
-		#ifdef EGRET
+		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				hemisphereLight.cullingMask = int(hemisphereLights[ i  * HEMI_LIGHT_SIZE + LIGHT_CULLING + 9]);
 			#else
@@ -198,15 +202,15 @@ vec3 directLightColor_Diffuse;
 				hemisphereLight.direction = vec3(hemisphereLights[ i  * HEMI_LIGHT_SIZE + 0], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 1], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 2]);
 				hemisphereLight.skyColor = vec3(hemisphereLights[ i  * HEMI_LIGHT_SIZE + 3], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 4], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 5]);
 				hemisphereLight.groundColor = vec3(hemisphereLights[ i  * HEMI_LIGHT_SIZE + 6], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 7], hemisphereLights[ i  * HEMI_LIGHT_SIZE + 8]);
-
+			
 				vIndirectFront += getHemisphereLightIrradiance( hemisphereLight, geometry );
-
+			
 				#ifdef DOUBLE_SIDED
-
+			
 					vIndirectBack += getHemisphereLightIrradiance( hemisphereLight, backGeometry );
-
+			
 				#endif
-			}	
+			}			
 		#else
 			vIndirectFront += getHemisphereLightIrradiance( hemisphereLights[ i ], geometry );
 	
@@ -216,7 +220,8 @@ vec3 directLightColor_Diffuse;
 	
 			#endif
 		#endif
-	}	
+	}
+    // #end unroll_loop
 
 #endif
 `;

@@ -10,6 +10,7 @@ export default /* glsl */`
 		if ( dot( vViewPosition, plane.xyz ) > plane.w ) discard;
 
 	}
+    // #end unroll_loop
 
 	#if UNION_CLIPPING_PLANES < NUM_CLIPPING_PLANES
 
@@ -22,6 +23,7 @@ export default /* glsl */`
 			clipped = ( dot( vViewPosition, plane.xyz ) > plane.w ) && clipped;
 
 		}
+		// #end unroll_loop
 
 		if ( clipped ) discard;
 
