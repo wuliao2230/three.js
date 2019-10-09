@@ -34,13 +34,13 @@ varying vec3 vIndirectFront;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 
-#ifdef EGRET  
+#ifdef EGRET
 	#include <custom_fragment> // modified by egret
 #endif
 
 void main() {
 
-	#ifdef EGRET  
+	#ifdef EGRET
 		// modified by egret
 		#include <custom_begin_fragment>
 	#endif

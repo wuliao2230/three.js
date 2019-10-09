@@ -29,7 +29,7 @@ void main()
 	if(t>1.0){ 			
 			v_discard=1.0;
 			return;
-  }
+  	}
 	  
 	#include <particle_affector>
 	vec4 mvPosition = viewMatrix * vec4( center, 1.0 );

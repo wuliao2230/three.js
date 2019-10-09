@@ -6,7 +6,6 @@ uniform float opacity;
 varying vec3 vWorldDirection;
 
 void main() {
-
 	vec4 texColor = textureCube( tCube, vec3( tFlip * vWorldDirection.x, vWorldDirection.yz ) );
 
 	gl_FragColor = mapTexelToLinear( texColor );
