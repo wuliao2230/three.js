@@ -8,7 +8,6 @@ export default /* glsl */`
 #include <clipping_planes_pars_vertex>
 
 void main() {
-	// modified by egret
 	#ifdef EGRET  
 		#ifdef USE_INSTANCED
 			#include <instances_vertex>

@@ -11,8 +11,8 @@ export default /* glsl */`
 
 		vec3 worldNormal = inverseTransformDirection( transformedNormal, viewMatrix );
 
-		#ifdef EGRET  
-			#ifndef ENVMAP_MODE_REFRACTION // modified by egret
+		#ifdef EGRET
+			#ifndef ENVMAP_MODE_REFRACTION
 				vReflect = reflect( cameraToVertex, worldNormal );
 			#else
 				vReflect = refract( cameraToVertex, worldNormal, refractionRatio );

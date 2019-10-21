@@ -35,8 +35,7 @@ IncidentLight directLight;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_POINT_LIGHTS; i ++ ) {
 
-		#ifdef EGRET  
-			// modified by egret
+		#ifdef EGRET
 			#ifdef LIGHT_CULLING
 				pointLight.cullingMask = int(pointLights[ i * POINT_LIGHT_SIZE + LIGHT_CULLING + 15]);
 			#else
@@ -88,8 +87,7 @@ IncidentLight directLight;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_SPOT_LIGHTS; i ++ ) {
 
-		// modified by egret		
-		#ifdef EGRET  
+		#ifdef EGRET
 			#ifdef LIGHT_CULLING
 				spotLight.cullingMask = int(spotLights[ i * SPOT_LIGHT_SIZE + LIGHT_CULLING + 18]);
 			#else
@@ -108,7 +106,6 @@ IncidentLight directLight;
 
 				#if defined( USE_SHADOWMAP ) && ( UNROLLED_LOOP_INDEX < NUM_SPOT_LIGHT_SHADOWS )
 
- 				// modified by egret
 				spotLight.shadow = int(spotLights[ i  * SPOT_LIGHT_SIZE + 13]);
 				spotLight.shadowBias = spotLights[ i  * SPOT_LIGHT_SIZE + 14];
 				spotLight.shadowRadius = spotLights[ i  * SPOT_LIGHT_SIZE + 15];
@@ -141,9 +138,8 @@ IncidentLight directLight;
 
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
-
-		// modified by egret		
-		#ifdef EGRET  
+	
+		#ifdef EGRET
 			#ifdef LIGHT_CULLING
 				directionalLight.cullingMask = int(directionalLights[ i * DIR_LIGHT_SIZE + LIGHT_CULLING + 11]);
 			#else
@@ -157,7 +153,6 @@ IncidentLight directLight;
 
 				#if defined( USE_SHADOWMAP ) && ( UNROLLED_LOOP_INDEX < NUM_DIR_LIGHT_SHADOWS )
 
- 				// modified by egret
 				directionalLight.shadow = int(directionalLights[ i  * DIR_LIGHT_SIZE + 6]);
 				directionalLight.shadowBias = directionalLights[ i  * DIR_LIGHT_SIZE + 7];
 				directionalLight.shadowRadius = directionalLights[ i  * DIR_LIGHT_SIZE + 8];
@@ -190,8 +185,7 @@ IncidentLight directLight;
 
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_RECT_AREA_LIGHTS; i ++ ) {
- 		// modified by egret
-		#ifdef EGRET  
+		#ifdef EGRET
 			#ifdef LIGHT_CULLING
 				rectAreaLight.cullingMask = int(rectAreaLights[ i * RECT_AREA_LIGHT_SIZE + LIGHT_CULLING + 12]);
 			#else
@@ -217,7 +211,7 @@ IncidentLight directLight;
 
 	vec3 iblIrradiance = vec3( 0.0 );
 	vec3 irradiance = getAmbientLightIrradiance( ambientLightColor );
-	#ifdef EGRET 
+	#ifdef EGRET
 
 	#else
 		irradiance += getLightProbeIrradiance( lightProbe, geometry );
@@ -228,8 +222,7 @@ IncidentLight directLight;
 
 		#pragma unroll_loop
 		for ( int i = 0; i < NUM_HEMI_LIGHTS; i ++ ) {
-
- 			// modified by egret
+			
 			#ifdef EGRET
 				#ifdef LIGHT_CULLING
 					hemisphereLight.cullingMask = int(hemisphereLights[ i * HEMI_LIGHT_SIZE + LIGHT_CULLING + 9]);

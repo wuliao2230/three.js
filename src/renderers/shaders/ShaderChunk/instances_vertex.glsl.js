@@ -1,5 +1,5 @@
 export default /* glsl */`
-//modify by egret
+
 #if defined( USE_ENVMAP ) || defined( DISTANCE ) || defined ( USE_SHADOWMAP )
 
 	mat4 modelMatrix = mat4(modelMatrix0,modelMatrix1,modelMatrix2,modelMatrix3);

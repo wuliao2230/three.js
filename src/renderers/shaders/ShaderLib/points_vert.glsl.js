@@ -10,8 +10,8 @@ uniform float scale;
 #include <clipping_planes_pars_vertex>
 
 void main() {
-	#ifdef EGRET  
-		// modified by egret
+	
+	#ifdef EGRET
 		#ifdef USE_INSTANCED
 			#include <instances_vertex>
 		#endif

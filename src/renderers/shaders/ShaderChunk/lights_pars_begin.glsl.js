@@ -53,7 +53,6 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 }
 
-// modified by egret
 #ifdef EGRET
 #define DIR_LIGHT_SIZE 43
 #define POINT_LIGHT_SIZE 47
@@ -157,7 +156,7 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 	};
 
 	#ifdef EGRET  
-		uniform float spotLights[ NUM_SPOT_LIGHTS * SPOT_LIGHT_SIZE ]; // modified by egret
+		uniform float spotLights[ NUM_SPOT_LIGHTS * SPOT_LIGHT_SIZE ];
 	#else
 		uniform SpotLight spotLights[ NUM_SPOT_LIGHTS ];
 	#endif
@@ -208,7 +207,7 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 	uniform sampler2D ltc_2; // RGBA Float
 
 	#ifdef EGRET  
-		uniform float rectAreaLights[ NUM_RECT_AREA_LIGHTS * RECT_AREA_LIGHT_SIZE ]; // modified by egret
+		uniform float rectAreaLights[ NUM_RECT_AREA_LIGHTS * RECT_AREA_LIGHT_SIZE ];
 	#else
 		uniform RectAreaLight rectAreaLights[ NUM_RECT_AREA_LIGHTS ];
 	#endif
@@ -229,7 +228,7 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 
 	#ifdef EGRET  
-		uniform float hemisphereLights[NUM_HEMI_LIGHTS * HEMI_LIGHT_SIZE ]; // modified by egret
+		uniform float hemisphereLights[NUM_HEMI_LIGHTS * HEMI_LIGHT_SIZE ];
 	#else
 		uniform HemisphereLight hemisphereLights[ NUM_HEMI_LIGHTS ];
 	#endif

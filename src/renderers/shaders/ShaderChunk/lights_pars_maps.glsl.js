@@ -57,7 +57,7 @@ export default /* glsl */`
 	vec3 getLightProbeIndirectRadiance( /*const in SpecularLightProbe specularLightProbe,*/ const in GeometricContext geometry, const in float blinnShininessExponent, const in int maxMIPLevel ) {
 
 		#ifdef EGRET  
-			#ifndef ENVMAP_MODE_REFRACTION // modified by egret
+			#ifndef ENVMAP_MODE_REFRACTION
 				vec3 reflectVec = reflect( -viewDir, normal );
 
 				// Mixing the reflection with the normal is more accurate and keeps rough objects from gathering light from behind their tangent plane.
@@ -125,8 +125,7 @@ export default /* glsl */`
 
 		#elif defined( ENVMAP_TYPE_SPHERE )
 
-			#ifdef EGRET  
-				// modified by egret
+			#ifdef EGRET
 				vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0, 0.0, -1.0 ) );
 				reflectView = vec3(reflectView.x * 0.5 + 0.5, 1.0 - (reflectView.y * 0.5 + 0.5), 0.0);
 			#else

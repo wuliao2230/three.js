@@ -11,9 +11,8 @@ void main() {
 	#include <project_vertex>
 
 	#ifdef EGRET  
-		gl_Position.z = gl_Position.w; // set z to camera.far    ---modified by egret
+		gl_Position.z = gl_Position.w; // set z to camera.far
 	#endif
-
 	
 }
 `;

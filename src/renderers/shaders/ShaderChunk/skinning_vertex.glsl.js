@@ -1,8 +1,7 @@
 export default /* glsl */`
 #ifdef USE_SKINNING
 
-	#ifdef EGRET 
-		// modified by egret
+	#ifdef EGRET
 		vec4 skinVertex = vec4( transformed, 1.0 );
 
 		vec4 skinned = vec4( 0.0 );

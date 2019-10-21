@@ -27,7 +27,7 @@ void trimSegment( const in vec4 start, inout vec4 end ) {
 	end.xyz = mix( start.xyz, end.xyz, alpha );
 }
 void main() {
-	//modified by egret
+	
 	#ifdef EGRET  
 		#ifdef USE_INSTANCED
 			#include <instances_vertex>

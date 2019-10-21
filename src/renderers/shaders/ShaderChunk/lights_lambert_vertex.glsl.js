@@ -28,7 +28,6 @@ vec3 directLightColor_Diffuse;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_POINT_LIGHTS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET
 			
 			#ifdef LIGHT_CULLING
@@ -80,7 +79,6 @@ vec3 directLightColor_Diffuse;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_SPOT_LIGHTS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				spotLight.cullingMask = int(spotLights[ i  * SPOT_LIGHT_SIZE + LIGHT_CULLING + 18]);
@@ -143,7 +141,6 @@ vec3 directLightColor_Diffuse;
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_DIR_LIGHTS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				directionalLight.cullingMask = int(directionalLights[ i  * DIR_LIGHT_SIZE + LIGHT_CULLING + 11]);
@@ -191,7 +188,6 @@ vec3 directLightColor_Diffuse;
 
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_HEMI_LIGHTS; i ++ ) {
-		// modified by egret
 		#ifdef EGRET			
 			#ifdef LIGHT_CULLING
 				hemisphereLight.cullingMask = int(hemisphereLights[ i  * HEMI_LIGHT_SIZE + LIGHT_CULLING + 9]);

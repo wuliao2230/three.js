@@ -4,11 +4,8 @@ export default /* glsl */`
 	attribute vec2 uv2;
 	varying vec2 vUv2;
 	
- 	// modified by egret
 	#ifdef EGRET  
-
 		uniform vec4 lightMapScaleOffset;
-		
 	#endif
 
 #endif

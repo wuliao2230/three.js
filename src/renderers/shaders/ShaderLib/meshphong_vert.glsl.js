@@ -22,16 +22,13 @@ varying vec3 vViewPosition;
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 
-
-
-#ifdef EGRET  
-	#include <custom_vertex> // modified by egret
+#ifdef EGRET
+	#include <custom_vertex>
 #endif
 
-
 void main() {
-	#ifdef EGRET  
-		// modified by egret
+
+	#ifdef EGRET
 		#ifdef USE_INSTANCED
 			#include <instances_vertex>
 		#endif
@@ -70,10 +67,9 @@ void main() {
 	#include <shadowmap_vertex>
 	#include <fog_vertex>
 
- 
-	#ifdef EGRET  
-		// modified by egret
+	#ifdef EGRET
 		#include <custom_end_vertex>
 	#endif
+	
 }
 `;

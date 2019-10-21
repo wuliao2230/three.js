@@ -12,7 +12,6 @@ float getShadowMask() {
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_DIR_LIGHT_SHADOWS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET
 			directionalLight.shadow = int(directionalLights[ i  * DIR_LIGHT_SIZE + 6]);
 			directionalLight.shadowBias = directionalLights[ i  * DIR_LIGHT_SIZE + 7];
@@ -42,7 +41,6 @@ float getShadowMask() {
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_SPOT_LIGHT_SHADOWS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET
 			spotLight.shadow = int(spotLights[ i  * SPOT_LIGHT_SIZE + 13]);
 			spotLight.shadowBias = spotLights[ i  * SPOT_LIGHT_SIZE + 14];
@@ -72,7 +70,6 @@ float getShadowMask() {
 	#pragma unroll_loop
 	for ( int i = 0; i < NUM_POINT_LIGHT_SHADOWS; i ++ ) {
 
- 		// modified by egret
 		#ifdef EGRET
 			pointLight.shadow = int(pointLights[ i  * POINT_LIGHT_SIZE + 8]);
 			pointLight.shadowBias = pointLights[ i  * POINT_LIGHT_SIZE + 9];

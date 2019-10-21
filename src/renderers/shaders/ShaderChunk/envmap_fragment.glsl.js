@@ -9,7 +9,7 @@ export default /* glsl */`
 		vec3 worldNormal = inverseTransformDirection( normal, viewMatrix );
 
 		#ifdef EGRET  
-			#ifndef ENVMAP_MODE_REFRACTION // modified by egret
+			#ifndef ENVMAP_MODE_REFRACTION
 				vec3 reflectVec = reflect( cameraToVertex, worldNormal );
 			#else
 				vec3 reflectVec = refract( cameraToVertex, worldNormal, refractionRatio );
@@ -46,9 +46,7 @@ export default /* glsl */`
 		sampleUV.y = asin( clamp( reflectVec.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
 
 		#ifdef EGRET  
-			sampleUV.y = 1.0 - sampleUV.y; // modified by egret
-		// #else
-		// 	sampleUV.y = asin( clamp( reflectVec.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
+			sampleUV.y = 1.0 - sampleUV.y;
 		#endif
 
 		sampleUV.x = atan( reflectVec.z, reflectVec.x ) * RECIPROCAL_PI2 + 0.5;
@@ -59,8 +57,7 @@ export default /* glsl */`
 
 		reflectVec = normalize( reflectVec );
 
-		#ifdef EGRET  
-			// modified by egret
+		#ifdef EGRET
 			vec3 reflectView = normalize( ( viewMatrix * vec4( reflectVec, 0.0 ) ).xyz + vec3( 0.0, 0.0, -1.0 ) );
 			reflectView = vec3(reflectView.x * 0.5 + 0.5, 1.0 - (reflectView.y * 0.5 + 0.5), 0.0);
 			vec4 envColor = texture2D( envMap, reflectView.xy);

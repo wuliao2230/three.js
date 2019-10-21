@@ -72,15 +72,13 @@ varying vec3 vViewPosition;
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
 
-#ifdef EGRET  
-	#include <custom_fragment> // modified by egret
+#ifdef EGRET
+	#include <custom_fragment>
 #endif
 
 void main() {
 
- 
-	#ifdef EGRET  
-		// modified by egret
+	#ifdef EGRET
 		#include <custom_begin_fragment>
 	#endif
 
@@ -127,12 +125,9 @@ void main() {
 	#include <premultiplied_alpha_fragment>
 	#include <dithering_fragment>
 
- 	
-	#ifdef EGRET  
-		// modified by egret
+	#ifdef EGRET
 		#include <custom_end_fragment>
 	#endif
-
 
 }
 `;
